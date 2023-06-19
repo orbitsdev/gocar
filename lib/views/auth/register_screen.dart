@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'package:gocar/models/AccountType.dart';
+import 'package:gocar/models/account_type.dart';
 
 class RegisterScreen extends StatefulWidget {
-
-   AccountType? accountType;
+  AccountType? account_type;
    RegisterScreen({
     Key? key,
-    this.accountType,
+    this.account_type,
   }) : super(key: key);
+ 
 
   @override
   _RegisterScreenState createState() => _RegisterScreenState();

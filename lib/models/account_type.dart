@@ -16,19 +16,19 @@ List<AccountType> accountdata = [
   AccountType(
     name: 'Admin',
     image: 'admin.svg',
-    title: 'Admin Account',
+    title: 'Admin',
     body: 'Manage the car rental system and oversee operations.',
   ),
   AccountType(
     name: 'Client',
     image: 'users.svg',
-    title: 'Client Account',
+    title: 'Client',
     body: 'Rent cars, view reservations, and manage personal information.',
   ),
   AccountType(
     name: 'Car Owner',
     image: 'rental.svg',
-    title: 'Car Owner Account',
+    title: 'Car Owner',
     body: 'List cars for rent, manage availability, and view earnings.',
   ),
 ];

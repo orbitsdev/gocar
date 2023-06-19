@@ -8,7 +8,7 @@ import 'package:gocar/views/auth/select_type_screen.dart';
 Future<void> main() async {
   runApp(const MyApp());
     WidgetsFlutterBinding.ensureInitialized();
-      AppBindings().dependencies();
+    AppBindings().dependencies();
 }
 
 class MyApp extends StatefulWidget {
