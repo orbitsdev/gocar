@@ -22,7 +22,7 @@ class _SelectTypeScreenState extends State<SelectTypeScreen> {
         title: const Text('Select Account Type'),
       ),
       body: Container(
-        color: Colors.white,
+        color: AppColor.bgPrimary,
         padding: EdgeInsets.symmetric(
           vertical: 20,
           horizontal: 20,

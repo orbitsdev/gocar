@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gocar/bindings/app_bindings.dart';
+import 'package:gocar/utils/app_color.dart';
 import 'package:gocar/views/auth/login_screen.dart';
 import 'package:gocar/views/auth/register_screen.dart';
 import 'package:gocar/views/auth/select_type_screen.dart';
@@ -30,7 +31,7 @@ class _MyAppState extends State<MyApp> {
         home: authLogic(),
           theme: ThemeData(
             useMaterial3: true,
-
+       colorSchemeSeed: AppColor.primary,
           ),
         getPages: [
           GetPage(name: '/login', page: () => LoginScreen()),
