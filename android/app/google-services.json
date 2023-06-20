@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "555823614483",
+    "project_id": "gocar-3d373",
+    "storage_bucket": "gocar-3d373.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:555823614483:android:29c54c517fab83cc5a8de6",
+        "android_client_info": {
+          "package_name": "com.orbino.gocar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "555823614483-79qa1teqi82ubmgelv0o6isd0ci9sb0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnI-vIiRylgtpQ2sB_LOPjXpjUc_H398c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "555823614483-79qa1teqi82ubmgelv0o6isd0ci9sb0n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

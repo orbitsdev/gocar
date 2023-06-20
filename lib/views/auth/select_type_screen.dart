@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:gocar/models/account_type.dart';
-import 'package:gocar/utils/app_color.dart';
+import 'package:gocar/utils/themes/app_color.dart';
 import 'package:gocar/views/auth/register_screen.dart';
 import 'package:gocar/widgets/account_type_widget.dart';
 

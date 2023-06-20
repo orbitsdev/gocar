@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:gocar/models/account_type.dart';
-import 'package:gocar/utils/app_color.dart';
-import 'package:gocar/utils/asset.dart';
+import 'package:gocar/utils/helpers/asset.dart';
+import 'package:gocar/utils/themes/app_color.dart';
 import 'package:gocar/widgets/v.dart';
 
 class AccountTypeWidget extends StatelessWidget {
@@ -34,21 +34,24 @@ class AccountTypeWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
-          SvgPicture.asset(
-            Asset.image(accountType.image),
-            width: 150,
-            height: 150,
-          ),
-          const V(16.0),
-          Text(
-            accountType.title,
-            style: const TextStyle(
-              fontSize: 28,
-              color: AppColor.primary,
-              fontWeight: FontWeight.bold,
+          Hero(
+            tag: accountType.name,
+            child: SvgPicture.asset(
+              Asset.image(accountType.image),
+              width: 150,
+              height: 150,
             ),
           ),
-          const V(8.0),
+        const V(16.0),
+        Text(
+          accountType.title,
+          style: const TextStyle(
+            fontSize: 28,
+            color: AppColor.primary,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const V(8.0),
           Text(
             accountType.body,
             textAlign: TextAlign.center,
