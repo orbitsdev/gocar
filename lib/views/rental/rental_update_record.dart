@@ -1,24 +1,33 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gocar/utils/helpers/asset.dart';
+import 'package:heroicons/heroicons.dart';
+import 'package:image_picker/image_picker.dart';
+
 import 'package:gocar/controllers/rental/rental_controller.dart';
+import 'package:gocar/models/vehicle.dart';
 import 'package:gocar/utils/modal.dart';
 import 'package:gocar/utils/themes/app_color.dart';
 import 'package:gocar/widgets/h.dart';
 import 'package:gocar/widgets/loader_widget.dart';
 import 'package:gocar/widgets/v.dart';
-import 'package:heroicons/heroicons.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:shimmer/shimmer.dart';
 
-class RentalCreateRecord extends StatefulWidget {
-  const RentalCreateRecord({Key? key}) : super(key: key);
+class RentalUpdateRecord extends StatefulWidget {
+  Vehicle? vehicle;
+  RentalUpdateRecord({
+    Key? key,
+    this.vehicle,
+  }) : super(key: key);
 
   @override
-  _RentalCreateRecordState createState() => _RentalCreateRecordState();
+  _RentalUpdateRecordState createState() => _RentalUpdateRecordState();
 }
 
-class _RentalCreateRecordState extends State<RentalCreateRecord> {
+class _RentalUpdateRecordState extends State<RentalUpdateRecord> {
   final rentController = Get.find<RentalController>();
   late TextEditingController _modelName;
   late TextEditingController _plateNumber;
@@ -35,13 +44,20 @@ class _RentalCreateRecordState extends State<RentalCreateRecord> {
 
   File? _image;
   List<File> _images = [];
+  late List<String> existing_featured_image;
+  List<String> remove_featured = [];
 
   @override
   void initState() {
-    _modelName = TextEditingController();
-    _plateNumber = TextEditingController();
-    _description = TextEditingController();
-    _price = TextEditingController();
+    _modelName = TextEditingController(text: widget.vehicle?.model_name ?? '');
+    _plateNumber =
+        TextEditingController(text: widget.vehicle?.plate_number ?? '');
+    _description =
+        TextEditingController(text: widget.vehicle?.description ?? '');
+    _price =
+        TextEditingController(text: widget.vehicle?.price.toString() ?? '0');
+
+    existing_featured_image = widget.vehicle?.featured_image ?? [];
 
     _modelNameFocusNode = FocusNode();
     _plateNumberFocusNode = FocusNode();
@@ -145,7 +161,7 @@ class _RentalCreateRecordState extends State<RentalCreateRecord> {
     });
   }
 
-  _save(BuildContext context) {
+  _update(BuildContext context) {
     _focusScopeNode.unfocus();
 
     // Validate the form
@@ -162,16 +178,33 @@ class _RentalCreateRecordState extends State<RentalCreateRecord> {
         return;
       }
 
-      rentController.submitForRequest(
+      rentController.updateVehicleInformation(
           context: context,
           model_name: _modelName.text.trim(),
           plate_number: _plateNumber.text.trim(),
           description: _description.text.trim(),
           price: _price.text.trim(),
           cover_image: _image as File,
-          featured_image: _images);
+          featured_image: _images,
+          remove_featured: remove_featured,
+           vehicle: widget.vehicle as Vehicle,
+          );
+    }
+  }
 
-     
+  void removeExistingFeatured(int index) {
+    int total_featured_image = existing_featured_image.length + _images.length;
+
+    if (total_featured_image > 3) {
+      setState(() {
+        remove_featured.add(existing_featured_image[index]);
+        existing_featured_image.removeAt(index);
+      });
+    } else {
+      Modal.showToast(
+          context: context,
+          message:
+              'You must have atleast 3  featured  image. Try adding one to delete the image');
     }
   }
 
@@ -290,12 +323,102 @@ class _RentalCreateRecordState extends State<RentalCreateRecord> {
                                       child: Text('Error loading image'));
                                 },
                               )
-                            : Center(
-                                child: Icon(Icons.image),
-                              ),
+                            : widget.vehicle?.cover_image != null
+                                ? CachedNetworkImage(
+                                    imageUrl: widget.vehicle?.cover_image ??
+                                        Asset.avatarDefault,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                    placeholder: (_, __) => Shimmer.fromColors(
+                                      child: Container(
+                                        color: Colors.grey[300],
+                                      ),
+                                      baseColor: Colors.grey[300]!,
+                                      highlightColor: Colors.grey[100]!,
+                                      period:
+                                          const Duration(milliseconds: 1500),
+                                    ),
+                                  )
+                                : Center(
+                                    child: Icon(Icons.image),
+                                  ),
                       ),
                     ),
                   ),
+                  const V(20),
+                  if (existing_featured_image.length > 0)
+                    Column(
+                      children: [
+                        Text(
+                          'Existing featured image',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const V(10),
+                        GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () {
+                            // Handle tap here
+                          },
+                          child: Wrap(
+                            spacing: 8.0,
+                            runSpacing: 8.0,
+                            children: List.generate(
+                                existing_featured_image.length,
+                                (index) => Stack(
+                                      children: [
+                                        SizedBox(
+                                          width: 100,
+                                          height: 100,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            child: CachedNetworkImage(
+                                              imageUrl: existing_featured_image[
+                                                  index],
+                                              fit: BoxFit.cover,
+                                              placeholder: (context, url) =>
+                                                  Shimmer.fromColors(
+                                                child: Container(
+                                                    color: Colors.grey[300]),
+                                                baseColor: Colors.grey[300]!,
+                                                highlightColor:
+                                                    Colors.grey[100]!,
+                                              ),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Icon(Icons.error),
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          top: 0,
+                                          right: 0,
+                                          child: GestureDetector(
+                                            behavior: HitTestBehavior.opaque,
+                                            onTap: () {
+                                              setState(() {
+                                                removeExistingFeatured(index);
+                                              });
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                              ),
+                                              child:
+                                                  Icon(Icons.close, size: 18),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+                          ),
+                        )
+                      ],
+                    ),
                   const V(20),
                   Text(
                     'Featured Images',
@@ -396,8 +519,9 @@ class _RentalCreateRecordState extends State<RentalCreateRecord> {
                       height: 50,
                       width: double.infinity,
                       child: TextButton(
-                        onPressed: () =>
-                            controller.isCreating.value ? null : _save(context),
+                        onPressed: () => controller.isCreating.value
+                            ? null
+                            : _update(context),
                         style: TextButton.styleFrom(
                           backgroundColor: AppColor.primary,
                           primary: Colors.white,
@@ -412,7 +536,7 @@ class _RentalCreateRecordState extends State<RentalCreateRecord> {
                                 color: Colors.white,
                               )
                             : const Text(
-                                "Submit For Review",
+                                "Update",
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,

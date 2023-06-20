@@ -14,6 +14,8 @@ import 'package:gocar/views/client/client_home_screen.dart';
 import 'package:gocar/views/rental/rental_create_record.dart';
 import 'package:gocar/views/rental/rental_dashboard.dart';
 import 'package:gocar/views/rental/rental_home_screen.dart';
+import 'package:gocar/views/rental/rental_update_record.dart';
+import 'package:gocar/views/rental/rental_vehicle_details.dart';
 import 'package:gocar/views/rental/rental_vehicle_list.dart';
 import 'package:gocar/widgets/loader_widget.dart';
 
@@ -109,7 +111,9 @@ class _MyAppState extends State<MyApp> {
           GetPage(name: '/rental', page: () => RentalHomeScreen()),
           GetPage(name: '/rental-dashboard', page: () => RentalDashboard()),
           GetPage(name: '/rental-vehicle-list', page: () => RentalVehicleList()),
-          GetPage(name: '/rental-create-for-rent-car', page: () => RentalCreateRecord()),
+          GetPage(name: '/rental-vehicle-create', page: () => RentalCreateRecord()),
+          GetPage(name: '/rental-vehicle-update', page: () => RentalUpdateRecord()),
+          GetPage(name: '/rental-vehicle-view', page: () => RentalVehicleDetails()),
           GetPage(name: '/client', page: () => ClientHomeScreen()),
         ]);
   }
