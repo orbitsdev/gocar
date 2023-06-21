@@ -20,13 +20,35 @@ class RentalHomeScreen extends StatefulWidget {
 
 class _RentalHomeScreenState extends State<RentalHomeScreen>
     with SingleTickerProviderStateMixin {
-  int currentIndex = 1;
+  int currentIndex = 0;
   late TabController tabController;
   late String token;
 
   List<Widget> pages = [
     RentalDashboard(),
     RentalVehicleList(),
+    Container(
+      child: Center(
+        child: Text(
+          'Sales Features Soon',
+          style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: AppColor.primary),
+        ),
+      ),
+    ),
+    Container(
+      child: Center(
+        child: Text(
+          'History Features Soon',
+          style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: AppColor.primary),
+        ),
+      ),
+    ),
   ];
   @override
   void initState() {
@@ -99,11 +121,11 @@ class _RentalHomeScreenState extends State<RentalHomeScreen>
           SalomonBottomBarItem(
             icon: const HeroIcon(
               HeroIcons.squares2x2,
-              style: HeroIconStyle.solid,
+              style: HeroIconStyle.outline,
             ),
             title: Text(
               "Dashboard",
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
             ),
           ),
 
@@ -111,11 +133,31 @@ class _RentalHomeScreenState extends State<RentalHomeScreen>
           SalomonBottomBarItem(
             icon: const HeroIcon(
               HeroIcons.truck,
-              style: HeroIconStyle.solid,
+              style: HeroIconStyle.outline,
             ),
             title: Text(
               "Cars",
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+            ),
+          ),
+          SalomonBottomBarItem(
+            icon: const HeroIcon(
+              HeroIcons.creditCard,
+              style: HeroIconStyle.outline,
+            ),
+            title: Text(
+              "Sales",
+              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+            ),
+          ),
+          SalomonBottomBarItem(
+            icon: const HeroIcon(
+              HeroIcons.clipboardDocumentCheck,
+              style: HeroIconStyle.outline,
+            ),
+            title: Text(
+              "History",
+              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
             ),
           ),
 

@@ -71,19 +71,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Container(),
-                  SvgPicture.asset(
-                    Asset.image('front.svg'),
+                  Image.asset(
+                    Asset.image('gocar-colored.png'),
                     height: MediaQuery.of(context).size.height * 0.33,
                     fit: BoxFit.cover,
                   ),
-                  const V(20),
-                  Text(
-                    'GO CAR',
-                    style: TextStyle(
-                        color: AppColor.primary,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 40),
-                  ),
+                  // SvgPicture.asset(
+                  //   Asset.image('front.svg'),
+                  //   height: MediaQuery.of(context).size.height * 0.33,
+                  //   fit: BoxFit.cover,
+                  // ),
+                  // const V(20),
+                  // Text(
+                  //   'GO CAR',
+                  //   style: TextStyle(
+                  //       color: AppColor.primary,
+                  //       fontWeight: FontWeight.bold,
+                  //       fontSize: 40),
+                  // ),
                   const V(20),
                   TextFormField(
                     decoration: InputDecoration(

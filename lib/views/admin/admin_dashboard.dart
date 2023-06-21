@@ -8,19 +8,23 @@ import 'package:gocar/controllers/auth/auth_controller.dart';
 import 'package:gocar/models/overview.dart';
 import 'package:gocar/utils/helpers/asset.dart';
 import 'package:gocar/utils/themes/app_color.dart';
+import 'package:gocar/views/admin/admin_for_rent_vehicle_list.dart';
+import 'package:gocar/views/admin/admin_for_review_vehicle_list.dart';
+import 'package:gocar/views/admin/admin_rented_vehicle_list.dart';
+import 'package:gocar/widgets/admin_dashboard_card.dart';
 import 'package:gocar/widgets/rental_dashboard_card.dart';
 import 'package:gocar/widgets/h.dart';
 import 'package:gocar/widgets/profile_widget.dart';
 import 'package:gocar/widgets/v.dart';
 
-class RentalDashboard extends StatefulWidget {
-  const RentalDashboard({Key? key}) : super(key: key);
+class AdminDashBoard extends StatefulWidget {
+  const AdminDashBoard({Key? key}) : super(key: key);
 
   @override
-  _RentalDashboardState createState() => _RentalDashboardState();
+  _AdminDashBoardState createState() => _AdminDashBoardState();
 }
 
-class _RentalDashboardState extends State<RentalDashboard> {
+class _AdminDashBoardState extends State<AdminDashBoard> {
   void openEndDrawer(BuildContext context) {
     Scaffold.of(context).openEndDrawer();
   }
@@ -155,15 +159,30 @@ class _RentalDashboardState extends State<RentalDashboard> {
               Expanded(
                 child: MasonryGridView.count(
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: rental_user_dashboard_overview.length,
+                  itemCount: admin_dashboard_oveview.length,
                   crossAxisCount: 2,
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
                   itemBuilder: (context, index) {
                     final Overview overview =
                         rental_user_dashboard_overview[index];
-                    return RentalDashBoardCard(
-                      overview: overview,
+                    return GestureDetector(
+                      onTap: () {
+                        if (overview.type == 'for-review') {
+                          Get.to(() => AdminForReviewVehicleList(),
+                              transition: Transition.cupertino);
+                        }
+                        if (overview.type == 'for-rent') {
+                          Get.to(() => AdminForRentVehicleList(),
+                              transition: Transition.cupertino);
+                        }
+                        if (overview.type == 'rented-car') {
+                          Get.to(() => AdminRentedVehicleList(), transition: Transition.cupertino);
+                        }
+                      },
+                      child: AdminDashBoardCard(
+                        overview: overview,
+                      ),
                     );
 
                     // return GestureDetector(

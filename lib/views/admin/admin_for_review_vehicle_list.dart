@@ -19,14 +19,15 @@ import 'package:gocar/widgets/rectangle_Image_widget.dart';
 import 'package:gocar/widgets/v.dart';
 import 'package:heroicons/heroicons.dart';
 
-class RentalVehicleList extends StatefulWidget {
-  const RentalVehicleList({Key? key}) : super(key: key);
+class AdminForReviewVehicleList extends StatefulWidget {
+  const AdminForReviewVehicleList({Key? key}) : super(key: key);
 
   @override
-  _RentalVehicleListState createState() => _RentalVehicleListState();
+  _AdminForReviewVehicleListState createState() =>
+      _AdminForReviewVehicleListState();
 }
 
-class _RentalVehicleListState extends State<RentalVehicleList> {
+class _AdminForReviewVehicleListState extends State<AdminForReviewVehicleList> {
   final rentalController = Get.find<RentalController>();
 
   void openEndDrawer(BuildContext context) {
@@ -38,7 +39,7 @@ class _RentalVehicleListState extends State<RentalVehicleList> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Rental Cars',
+          'For Review',
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,
@@ -108,7 +109,7 @@ class _RentalVehicleListState extends State<RentalVehicleList> {
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('vehicles')
-            .where('uid', isEqualTo: auth.currentUser!.uid)
+            .where('status', isEqualTo: 'For Review')
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
@@ -157,10 +158,46 @@ class _RentalVehicleListState extends State<RentalVehicleList> {
                     onSelected: (value) {
                       switch (value) {
                         case 'update':
-                          Get.to(() => RentalUpdateRecord(
-                                vehicle: vehicle,
-                              ));
-
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('Confirm Approve'),
+                                content: Text(
+                                    'Are you sure you want to approve this request ?'),
+                                actions: [
+                                  TextButton(
+                                    child: Text('Cancel'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  GetBuilder<RentalController>(
+                                      builder: (controller) {
+                                    return ElevatedButton(
+                                      child: controller.isUpdating.value
+                                          ? LoaderWidget(
+                                              color: Colors.white,
+                                            )
+                                          : Text(
+                                              'Approve',
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                      style: ElevatedButton.styleFrom(
+                                        primary: AppColor
+                                            .primary, // set the background color of the button
+                                      ),
+                                      onPressed: () {
+                                        rentalController.approveVehicles(
+                                            context: context, vehicle: vehicle);
+                                      },
+                                    );
+                                  }),
+                                ],
+                              );
+                            },
+                          );
                           return;
                         case 'delete':
                           showDialog(
@@ -215,20 +252,20 @@ class _RentalVehicleListState extends State<RentalVehicleList> {
                             children: [
                               Icon(Icons.edit),
                               SizedBox(width: 8),
-                              Text('Update'),
+                              Text('Aprrove'),
                             ],
                           ),
                         ),
-                      PopupMenuItem(
-                        value: 'delete',
-                        child: Row(
-                          children: [
-                            Icon(Icons.delete),
-                            SizedBox(width: 8),
-                            Text('Delete'),
-                          ],
-                        ),
-                      ),
+                      // PopupMenuItem(
+                      //   value: 'delete',
+                      //   child: Row(
+                      //     children: [
+                      //       Icon(Icons.delete),
+                      //       SizedBox(width: 8),
+                      //       Text('Delete'),
+                      //     ],
+                      //   ),
+                      // ),
                     ],
                     icon: Icon(Icons.more_vert),
                   ),

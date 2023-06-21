@@ -19,7 +19,7 @@ class RentalController extends GetxController {
   var isDeleting = false.obs;
   var isUpdating = false.obs;
 
-    var vehicleTemp = Vehicle().obs;
+  var vehicleTemp = Vehicle().obs;
 
   void handleUppdateError(BuildContext context, e) {
     isUpdating(true);
@@ -105,7 +105,8 @@ class RentalController extends GetxController {
         }));
 
         // Combine new and old images
-        final old_upload_file_url =  List<String>.from(vehicle.featured_image ?? []);
+        final old_upload_file_url =
+            List<String>.from(vehicle.featured_image ?? []);
         final updated_upload_file_url =
             old_upload_file_url + new_upload_file_url;
 
@@ -124,7 +125,7 @@ class RentalController extends GetxController {
         final updated_featured_image = {
           'featured_image': updated_upload_file_url
         };
-        vehicle =  vehicle.copyWith(featured_image: updated_upload_file_url);
+        vehicle = vehicle.copyWith(featured_image: updated_upload_file_url);
         await vehicles.doc(id).update(updated_featured_image);
       }
 
@@ -134,7 +135,7 @@ class RentalController extends GetxController {
       update();
 
       Get.back();
-      Modal.showSuccesToast( context: context, message: 'Tourist Spot successfully updated');
+      Modal.showSuccesToast(context: context, message: 'Successfully updated');
     } on FirebaseException catch (e) {
       handleUppdateError(context, e);
     } on PlatformException catch (e) {
@@ -214,13 +215,39 @@ class RentalController extends GetxController {
 
       Get.back();
       Modal.showSuccesToast(
-          context: context, message: 'Succesfully Sumbmitted For Review');
+          context: context, message: 'Successfully Submitted For Review');
     } on FirebaseException catch (e) {
       handleCreatrionError(context, e);
     } on PlatformException catch (e) {
       handleCreatrionError(context, e);
     } catch (e) {
       handleCreatrionError(context, e);
+    }
+  }
+
+  void approveVehicles({
+    required BuildContext context,
+    required Vehicle vehicle,
+  }) async {
+    try {
+      isUpdating(true);
+      update();
+      final String id = vehicle.id as String;
+
+      await vehicles.doc(id).update({'status': 'Approved'});
+      // Update featured images
+
+      isUpdating(false);
+      update();
+
+      Get.back();
+      Modal.showSuccesToast(context: context, message: 'successfully Approved');
+    } on FirebaseException catch (e) {
+      handleUppdateError(context, e);
+    } on PlatformException catch (e) {
+      handleUppdateError(context, e);
+    } catch (e) {
+      handleUppdateError(context, e);
     }
   }
 }

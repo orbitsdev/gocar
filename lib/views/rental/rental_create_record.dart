@@ -170,8 +170,6 @@ class _RentalCreateRecordState extends State<RentalCreateRecord> {
           price: _price.text.trim(),
           cover_image: _image as File,
           featured_image: _images);
-
-     
     }
   }
 

@@ -107,6 +107,7 @@ class _MyAppState extends State<MyApp> {
           GetPage(name: '/select-type', page: () => SelectTypeScreen()),
           GetPage(name: '/register', page: () => RegisterScreen()),
           GetPage(name: '/admin', page: () => AdminHomeScreen()),
+          GetPage(name: '/admin', page: () => AdminHomeScreen()),
           
           GetPage(name: '/rental', page: () => RentalHomeScreen()),
           GetPage(name: '/rental-dashboard', page: () => RentalDashboard()),

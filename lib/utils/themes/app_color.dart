@@ -11,4 +11,6 @@ class AppColor {
 
  static const Color borderLight = Color(0xffF1F1FF);
  static const Color purple1 = Color(0xff2E0293);
+
+  static const Color font = Color(0xff080808) ;
 }
