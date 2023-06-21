@@ -96,7 +96,7 @@ class RentalController extends GetxController {
           final file_uid = Uuid().v4();
           final featued_image_url = await FileApi.uploadFile(
             context: context,
-            folder: 'touristspot/featured_image/',
+            folder: 'vehicles/featured_image/',
             file_id: file_uid,
             filename: path.basename(file.path),
             file: file,
