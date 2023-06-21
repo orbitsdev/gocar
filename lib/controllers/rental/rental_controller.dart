@@ -129,8 +129,9 @@ class RentalController extends GetxController {
         await vehicles.doc(id).update(updated_featured_image);
       }
 
-      final updated_touristspot = vehicle.toMap();
-      await vehicles.doc(id).update(updated_touristspot);
+      final filanUpdate = vehicle.copyWith(model_name: model_name,price:int.parse(price),plate_number: plate_number,description: description);
+      await vehicles.doc(id).update(filanUpdate.toMap());
+
       isUpdating(false);
       update();
 
@@ -171,7 +172,7 @@ class RentalController extends GetxController {
         uid: uid,
         model_name: model_name,
         plate_number: plate_number,
-        cover_image: '',
+        cover_image: Asset.bannerDefault,
         featured_image: [],
         description: description,
         isSold: false,

@@ -134,7 +134,7 @@ class _RentalVehicleListState extends State<RentalVehicleList> {
                       EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                   minVerticalPadding: 0.0,
                   leading: RectangleImageWidget(
-                    url: vehicle.cover_image,
+                    url: vehicle.cover_image ?? Asset.bannerDefault,
                     width: 50,
                     height: 200,
                     viewable: true,

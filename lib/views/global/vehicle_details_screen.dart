@@ -65,15 +65,16 @@ class VehicleDetailsScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    V(20),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         CarDetailsCard(),
                         CarDetailsCard(),
                         CarDetailsCard(),
-                        CarDetailsCard(),
+                        // CarDetailsCard(),
                       ],
-                    )
-
+                    ),
                     // Text(
                     //   capitalize('${vehicle?.model_name}'),
                     //   style: Theme.of(context).textTheme.headline1!.copyWith(

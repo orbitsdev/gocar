@@ -8,7 +8,15 @@ class CarDetailsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white, // Customize the background color
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+              blurRadius: 16,
+              offset: Offset(0, 1),
+              spreadRadius: 4,
+              color: Colors.black.withOpacity(0.1))
+        ],
+        // Customize the background color
         borderRadius:
             BorderRadius.circular(10), // Apply border radius for rounded shape
       ),
@@ -20,8 +28,8 @@ class CarDetailsCard extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color:
-                  AppColor.bgSecondary, // Customize the icon background color
+              color: AppColor.primary
+                  .withOpacity(0.1), // Customize the icon background color
             ),
             padding: EdgeInsets.all(12), // Adjust padding for icon size
             child: Icon(
@@ -32,11 +40,17 @@ class CarDetailsCard extends StatelessWidget {
           ),
           SizedBox(height: 8), // Add spacing between the icon and text
           Text(
-            'Your Text Here',
+            '4.3ms',
             style: TextStyle(
               fontSize: 16, // Customize the text size
-              fontWeight: FontWeight.bold, // Customize the text style
             ),
+          ),
+          Text(
+            '0-100mph',
+            style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey.shade400 // Customize the text size
+                ),
           ),
         ],
       ),

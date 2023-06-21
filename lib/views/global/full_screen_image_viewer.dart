@@ -8,7 +8,7 @@ class FullScreenImageViewer extends StatelessWidget {
    String? imageUrl;
    FullScreenImageViewer({
     Key? key,
-    this.imageUrl,
+    this.imageUrl = Asset.bannerDefault,
   }) : super(key: key);
 
 
@@ -25,7 +25,7 @@ class FullScreenImageViewer extends StatelessWidget {
           child: Center(
             child: InteractiveViewer(
               child: CachedNetworkImage(
-                imageUrl: imageUrl ?? sampleimage,
+                imageUrl: imageUrl ?? Asset.bannerDefault  ,
                 fit: BoxFit.contain,
                 placeholder: (context, url) => CircularProgressIndicator(),
                 errorWidget: (context, url, error) => Icon(Icons.error),
