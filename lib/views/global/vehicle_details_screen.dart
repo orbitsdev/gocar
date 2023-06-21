@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gocar/widgets/car_details_card.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'package:gocar/models/vehicle.dart';
@@ -66,7 +67,13 @@ class VehicleDetailsScreen extends StatelessWidget {
                   children: [
 
 
-                 flu
+                    Row(
+                      children: [
+                       CarDetailsCard(),
+                       CarDetailsCard(),
+                       CarDetailsCard(),
+                      ],
+                    )
 
                     // Text(
                     //   capitalize('${vehicle?.model_name}'),
