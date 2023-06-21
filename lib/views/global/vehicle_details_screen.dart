@@ -68,6 +68,9 @@ class VehicleDetailsScreen extends StatelessWidget {
                     Row(
                       children: [
                         CarDetailsCard(),
+                        CarDetailsCard(),
+                        CarDetailsCard(),
+                        CarDetailsCard(),
                       ],
                     )
 
