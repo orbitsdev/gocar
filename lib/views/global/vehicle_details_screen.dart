@@ -65,13 +65,9 @@ class VehicleDetailsScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
-
                     Row(
                       children: [
-                       CarDetailsCard(),
-                       CarDetailsCard(),
-                       CarDetailsCard(),
+                        CarDetailsCard(),
                       ],
                     )
 

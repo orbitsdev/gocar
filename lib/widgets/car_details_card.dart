@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gocar/utils/themes/app_color.dart';
 
 class CarDetailsCard extends StatelessWidget {
   const CarDetailsCard({Key? key}) : super(key: key);
@@ -7,7 +8,7 @@ class CarDetailsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.lightBlueAccent, // Customize the background color
+        color: Colors.white, // Customize the background color
         borderRadius:
             BorderRadius.circular(10), // Apply border radius for rounded shape
       ),
@@ -19,12 +20,13 @@ class CarDetailsCard extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.white, // Customize the icon background color
+              color:
+                  AppColor.bgSecondary, // Customize the icon background color
             ),
             padding: EdgeInsets.all(12), // Adjust padding for icon size
             child: Icon(
               Icons.star,
-              color: Colors.yellow, // Customize the icon color
+              color: AppColor.primary, // Customize the icon color
               size: 24, // Adjust the icon size
             ),
           ),
@@ -34,7 +36,6 @@ class CarDetailsCard extends StatelessWidget {
             style: TextStyle(
               fontSize: 16, // Customize the text size
               fontWeight: FontWeight.bold, // Customize the text style
-              color: Colors.white, // Customize the text color
             ),
           ),
         ],
