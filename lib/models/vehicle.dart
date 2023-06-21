@@ -15,6 +15,7 @@ class Vehicle {
   String? status;
   int? price;
   DateTime? created_at;
+  
   Vehicle({
     this.id,
     this.uid,

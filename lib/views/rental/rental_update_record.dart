@@ -166,12 +166,14 @@ class _RentalUpdateRecordState extends State<RentalUpdateRecord> {
 
     // Validate the form
     if (_key.currentState!.validate()) {
-      if (_image == null) {
+      if (_image == null && widget.vehicle?.cover_image == null) {
         Modal.showToast(context: context, message: 'Cover  image is required');
         return;
       }
 
-      if (_images.length < 3) {
+      List<String>? featured_image_url = widget.vehicle!.featured_image ?? [];
+
+      if (featured_image_url.isEmpty && _images.length < 3) {
         Modal.showToast(
             context: context,
             message: 'You should have atleast 3 featured image');
@@ -179,16 +181,16 @@ class _RentalUpdateRecordState extends State<RentalUpdateRecord> {
       }
 
       rentController.updateVehicleInformation(
-          context: context,
-          model_name: _modelName.text.trim(),
-          plate_number: _plateNumber.text.trim(),
-          description: _description.text.trim(),
-          price: _price.text.trim(),
-          cover_image: _image as File,
-          featured_image: _images,
-          remove_featured: remove_featured,
-           vehicle: widget.vehicle as Vehicle,
-          );
+        context: context,
+        model_name: _modelName.text.trim(),
+        plate_number: _plateNumber.text.trim(),
+        description: _description.text.trim(),
+        price: _price.text.trim(),
+        cover_image: _image,
+        featured_image: _images,
+        remove_featured: remove_featured,
+        vehicle: widget.vehicle as Vehicle,
+      );
     }
   }
 
@@ -393,8 +395,8 @@ class _RentalUpdateRecordState extends State<RentalUpdateRecord> {
                                           ),
                                         ),
                                         Positioned(
-                                          top: 0,
-                                          right: 0,
+                                          top: 2,
+                                          right: 3,
                                           child: GestureDetector(
                                             behavior: HitTestBehavior.opaque,
                                             onTap: () {
@@ -402,14 +404,29 @@ class _RentalUpdateRecordState extends State<RentalUpdateRecord> {
                                                 removeExistingFeatured(index);
                                               });
                                             },
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(50),
+                                            child: ClipOval(
+                                              child: Container(
+                                                width: 34,
+                                                height: 34,
+                                                padding: EdgeInsets.all(4),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            100),
+                                                    color: Colors.black
+                                                        .withOpacity(0.3),
+                                                    border: Border.all(
+                                                        width: 2,
+                                                        color: Colors.white)),
+                                                child: Center(
+                                                  child: HeroIcon(
+                                                    HeroIcons.xMark,
+                                                    style: HeroIconStyle.solid,
+                                                    color: Colors.white,
+                                                    size: 24,
+                                                  ),
+                                                ),
                                               ),
-                                              child:
-                                                  Icon(Icons.close, size: 18),
                                             ),
                                           ),
                                         ),
@@ -519,7 +536,7 @@ class _RentalUpdateRecordState extends State<RentalUpdateRecord> {
                       height: 50,
                       width: double.infinity,
                       child: TextButton(
-                        onPressed: () => controller.isCreating.value
+                        onPressed: () => controller.isUpdating.value
                             ? null
                             : _update(context),
                         style: TextButton.styleFrom(
@@ -531,7 +548,7 @@ class _RentalUpdateRecordState extends State<RentalUpdateRecord> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        child: controller.isCreating.value
+                        child: controller.isUpdating.value
                             ? LoaderWidget(
                                 color: Colors.white,
                               )
