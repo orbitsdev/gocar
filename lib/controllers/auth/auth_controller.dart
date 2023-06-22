@@ -52,6 +52,7 @@ class AuthController extends GetxController {
 
       if (!userDoc.exists) {
         throw 'User not found';
+        
       }
 
       UserAccount userAccount =
@@ -63,17 +64,15 @@ class AuthController extends GetxController {
       Get.back();
       final isEmailVerified = auth.currentUser!.emailVerified;
 
-      if(!isEmailVerified) {
+      if (!isEmailVerified) {
         Get.offAll(() => EmailVerificationScreen());
-
-      } else  if (user.value.role == 'Admin') {
+      } else if (user.value.role == 'Admin') {
         Get.offAll(() => AdminHomeScreen());
       } else if (user.value.role == 'Car Owner') {
         Get.offAll(() => RentalHomeScreen());
       } else {
         Get.offAll(() => ClientHomeScreen());
       }
-      
     } on SocketException catch (e) {
       LoginhandleError(context, e.message);
     } on PlatformException catch (e) {
@@ -127,10 +126,9 @@ class AuthController extends GetxController {
       Get.back();
       final isEmailVerified = auth.currentUser!.emailVerified;
 
-      if(!isEmailVerified) {
+      if (!isEmailVerified) {
         Get.offAll(() => EmailVerificationScreen());
-
-      } else  if (user.value.role == 'Admin') {
+      } else if (user.value.role == 'Admin') {
         Get.offAll(() => AdminHomeScreen());
       } else if (user.value.role == 'Car Owner') {
         Get.offAll(() => RentalHomeScreen());

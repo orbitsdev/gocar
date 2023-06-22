@@ -32,6 +32,11 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     sendVerification();
   }
 
+@override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
+  }
+
   Future<void> sendVerification() async {
     isEmailVerified = auth.currentUser!.emailVerified;
     if (!isEmailVerified) {
@@ -44,7 +49,9 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   }
 
   Future<void> checkEmailVerified() async {
-    await FirebaseAuth.instance.currentUser!.reload();
+
+    if(auth.currentUser != null){
+await FirebaseAuth.instance.currentUser!.reload();
     setState(() {
       isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
     });
@@ -58,8 +65,14 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
         Get.offAll(() => ClientHomeScreen());
       }
     }
+    }
+    
   }
-
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,7 +111,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
             ),
             const V(8.0),
             Text(
-              'Please verify your email to continue.',
+              'We have sent email verification link to your email. Please verify your email to continue.',
               style: TextStyle(fontSize: 16),
               textAlign: TextAlign.center,
             ),

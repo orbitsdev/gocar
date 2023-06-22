@@ -235,7 +235,9 @@ class RentalController extends GetxController {
       update();
       final String id = vehicle.id as String;
 
-      await vehicles.doc(id).update({'status': 'Approved'});
+      await vehicles.doc(id).update({
+        'status': 'Approved',
+        });
       // Update featured images
 
       isUpdating(false);
