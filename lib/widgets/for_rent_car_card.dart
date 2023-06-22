@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gocar/models/vehicle.dart';
 import 'package:gocar/utils/helpers/asset.dart';
 import 'package:gocar/utils/helpers/functions.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ForRentCardWidget extends StatelessWidget {
@@ -88,12 +89,12 @@ class ForRentCardWidget extends StatelessWidget {
                       topRight: Radius.circular(15),
                       bottomLeft: Radius.circular(15)),
                 ),
-                child: Icon(
-                  Icons.star,
-                  color: Colors.amber[300],
-                  size: 24,
-                ),
-              )),
+                child: HeroIcon(
+                  HeroIcons.heart,
+                  style: HeroIconStyle.outline,
+                    color: Colors.white, size: 20),
+              )
+              ),
         ],
       ),
     );

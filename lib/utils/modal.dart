@@ -5,6 +5,17 @@ import 'package:gocar/utils/themes/app_color.dart';
 
 class Modal {
 
+ static void showToastSucces(
+      { String message = 'Success'}) {
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
  static void showSuccesToast(
       {required BuildContext context, String message = 'Success'}) {
     Fluttertoast.showToast(

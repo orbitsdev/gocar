@@ -31,14 +31,14 @@ class ClientForRentVehicleList extends StatelessWidget {
           ),
         ),
         actions: [
-          IconButton(
-            onPressed: () => Get.to(() => RentalCreateRecord(),
-                fullscreenDialog: true, transition: Transition.cupertino),
-            icon: HeroIcon(
-              HeroIcons.plus,
-              style: HeroIconStyle.solid,
-            ),
-          ),
+          // IconButton(
+          //   onPressed: () => Get.to(() => RentalCreateRecord(),
+          //       fullscreenDialog: true, transition: Transition.cupertino),
+          //   icon: HeroIcon(
+          //     HeroIcons.plus,
+          //     style: HeroIconStyle.solid,
+          //   ),
+          // ),
           Builder(builder: (context) {
             return IconButton(
               onPressed: () => openEndDrawer(context),
@@ -102,7 +102,10 @@ class ClientForRentVehicleList extends StatelessWidget {
 
                         return GestureDetector(
                           onTap: () async {
-                            Get.to(() => VehicleDetailsScreen(vehicle: vehicle,),
+                            Get.to(
+                                () => VehicleDetailsScreen(
+                                      vehicle: vehicle,
+                                    ),
                                 transition: Transition.cupertino);
                           },
                           child: ForRentCardWidget(vehicle: vehicle),
@@ -119,4 +122,3 @@ class ClientForRentVehicleList extends StatelessWidget {
     );
   }
 }
-

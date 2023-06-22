@@ -145,55 +145,56 @@ class VehicleDetailsScreen extends StatelessWidget {
                       //     ),
                       //   ],
                       // ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const H(10),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: vehicle?.status == 'Approved'
-                                  ? Colors.green.withOpacity(0.2)
-                                  : vehicle?.status == 'For Review'
-                                      ? Colors.blue.withOpacity(0.2)
-                                      : Colors.red.withOpacity(0.2),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 5),
-                            child: Row(
-                              children: [
-                                HeroIcon(
-                                  vehicle?.status == 'Approved'
-                                      ? HeroIcons.check
-                                      : vehicle?.status == 'For Review'
-                                          ? HeroIcons.clock
-                                          : HeroIcons.xMark,
-                                  style: HeroIconStyle.outline,
-                                  color: vehicle?.status == 'Approved'
-                                      ? Colors.green
-                                      : vehicle?.status == 'For Review'
-                                          ? Colors.blue
-                                          : Colors.red,
-                                  size: 20,
-                                ),
-                                H(5),
-                                Text(
-                                  capitalize('${vehicle?.status}'),
-                                  style: TextStyle(
-                                    fontSize: 14,
+                      if (authcontroller.user.value.role != 'Client')
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const H(10),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: vehicle?.status == 'Approved'
+                                    ? Colors.green.withOpacity(0.2)
+                                    : vehicle?.status == 'For Review'
+                                        ? Colors.blue.withOpacity(0.2)
+                                        : Colors.red.withOpacity(0.2),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              child: Row(
+                                children: [
+                                  HeroIcon(
+                                    vehicle?.status == 'Approved'
+                                        ? HeroIcons.check
+                                        : vehicle?.status == 'For Review'
+                                            ? HeroIcons.clock
+                                            : HeroIcons.xMark,
+                                    style: HeroIconStyle.outline,
                                     color: vehicle?.status == 'Approved'
                                         ? Colors.green
                                         : vehicle?.status == 'For Review'
                                             ? Colors.blue
                                             : Colors.red,
-                                    fontWeight: FontWeight.bold,
+                                    size: 20,
                                   ),
-                                ),
-                              ],
+                                  H(5),
+                                  Text(
+                                    capitalize('${vehicle?.status}'),
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: vehicle?.status == 'Approved'
+                                          ? Colors.green
+                                          : vehicle?.status == 'For Review'
+                                              ? Colors.blue
+                                              : Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
                     ]),
                     // add details for if available or not
 
@@ -436,7 +437,7 @@ class VehicleDetailsScreen extends StatelessWidget {
                               )),
                       ]),
                     ),
-                    V(20),
+                    V(MediaQuery.of(context).size.height * 0.20),
                     // SizedBox(
                     //   height: 300,
                     //   child: GridView.count(
@@ -607,7 +608,35 @@ class VehicleDetailsScreen extends StatelessWidget {
                           backgroundColor: AppColor.primary,
                           foregroundColor: Colors.white,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          //show aler dialog for confirmation use material dialog
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text('Confirmation'),
+                                  content: Text(
+                                      'Are you sure you want to book this car? / Please note no function yet'),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Get.back();
+                                        },
+                                        child: Text('Cancel')),
+                                    ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              Colors.green.shade500,
+                                          foregroundColor: Colors.white,
+                                        ),
+                                        onPressed: () {
+                                          Get.back();
+                                        },
+                                        child: Text('Confirm')),
+                                  ],
+                                );
+                              });
+                        },
                         child: const Center(
                           child: Text(
                             'Book Car Now',

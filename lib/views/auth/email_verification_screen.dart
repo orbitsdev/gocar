@@ -26,6 +26,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   bool isEmailVerified = false;
   bool canResendEmail = false;
   Timer? timer;
+  
   @override
   void initState() {
     super.initState();

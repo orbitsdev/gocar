@@ -176,7 +176,8 @@ class AuthController extends GetxController {
     try {
       final authuser = FirebaseAuth.instance.currentUser;
       await authuser?.sendEmailVerification();
-      print('email verification link sent');
+      Modal.showToastSucces(
+           message: 'Emai have been sent to ${authuser?.email}');
     } catch (e) {
       Modal.errorToast(message: e.toString());
     }
