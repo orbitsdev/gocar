@@ -13,12 +13,12 @@ class AccountType {
 }
 
 List<AccountType> accountdata = [
-  AccountType(
-    name: 'Admin',
-    image: 'admin.svg',
-    title: 'Admin',
-    body: 'Manage the car rental system and oversee operations.',
-  ),
+  // AccountType(
+  //   name: 'Admin',
+  //   image: 'admin.svg',
+  //   title: 'Admin',
+  //   body: 'Manage the car rental system and oversee operations.',
+  // ),
   AccountType(
     name: 'Client',
     image: 'users.svg',

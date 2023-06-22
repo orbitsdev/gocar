@@ -21,27 +21,42 @@ class EmailVerificationScreen extends StatefulWidget {
       _EmailVerificationScreenState();
 }
 
-class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
+class _EmailVerificationScreenState extends State<EmailVerificationScreen>
+    with WidgetsBindingObserver {
   final authcontroller = Get.find<AuthController>();
   bool isEmailVerified = false;
   bool canResendEmail = false;
   Timer? timer;
-  
+  bool verificationEmailSent = false; // Track if verification email has been sent
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     sendVerification();
   }
 
-@override
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      timer?.cancel();
+    } else if (state == AppLifecycleState.resumed) {
+      if (!isEmailVerified && !verificationEmailSent) {
+        sendVerification();
+      }
+    }
+  }
+
+  @override
   void setState(fn) {
     if (mounted) super.setState(fn);
   }
 
   Future<void> sendVerification() async {
     isEmailVerified = auth.currentUser!.emailVerified;
-    if (!isEmailVerified) {
+    if (!isEmailVerified && !verificationEmailSent) {
       await authcontroller.sendVerification();
+      verificationEmailSent = true; // Set the flag to indicate verification email sent
       timer = Timer.periodic(Duration(seconds: 3), (_) => checkEmailVerified());
       setState(() => canResendEmail = false);
       await Future.delayed(Duration(seconds: 5));
@@ -50,14 +65,13 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   }
 
   Future<void> checkEmailVerified() async {
+    if (auth.currentUser != null) {
+      await FirebaseAuth.instance.currentUser!.reload();
+      setState(() {
+        isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+      });
+      if (isEmailVerified) timer?.cancel();
 
-    if(auth.currentUser != null){
-await FirebaseAuth.instance.currentUser!.reload();
-    setState(() {
-      isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
-    });
-    if (isEmailVerified) {
-      timer?.cancel();
       if (authcontroller.user.value.role == 'Admin') {
         Get.offAll(() => AdminHomeScreen());
       } else if (authcontroller.user.value.role == 'Car Owner') {
@@ -66,14 +80,15 @@ await FirebaseAuth.instance.currentUser!.reload();
         Get.offAll(() => ClientHomeScreen());
       }
     }
-    }
-    
   }
+
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     timer?.cancel();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
