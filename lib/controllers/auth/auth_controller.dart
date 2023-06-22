@@ -62,7 +62,7 @@ class AuthController extends GetxController {
       update();
 
       Get.back();
-      final isEmailVerified = auth.currentUser!.emailVerified;
+      final isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
 
       if (!isEmailVerified) {
         Get.offAll(() => EmailVerificationScreen());
@@ -124,7 +124,7 @@ class AuthController extends GetxController {
       isRegisterLoading(false);
       update();
       Get.back();
-      final isEmailVerified = auth.currentUser!.emailVerified;
+          final isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
 
       if (!isEmailVerified) {
         Get.offAll(() => EmailVerificationScreen());
@@ -162,7 +162,7 @@ class AuthController extends GetxController {
     Get.offAll(() => LoginScreen());
   }
 
-  void getUserDetails(String uid) async {
+  Future<void> getUserDetails(String uid) async {
     DocumentSnapshot userDoc = await users.doc(uid).get();
     if (!userDoc.exists) {}
 

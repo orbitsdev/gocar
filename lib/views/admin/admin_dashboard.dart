@@ -29,6 +29,10 @@ class _AdminDashBoardState extends State<AdminDashBoard> {
     Scaffold.of(context).openEndDrawer();
   }
 
+ @override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

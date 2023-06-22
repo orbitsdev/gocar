@@ -24,7 +24,10 @@ class _RentalDashboardState extends State<RentalDashboard> {
   void openEndDrawer(BuildContext context) {
     Scaffold.of(context).openEndDrawer();
   }
-
+ @override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

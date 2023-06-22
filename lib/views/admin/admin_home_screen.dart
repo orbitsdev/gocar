@@ -25,6 +25,12 @@ class _AdminHomeScreenState extends State<AdminHomeScreen>
   late TabController tabController;
   late String token;
 
+   
+ @override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
+  }
+
   List<Widget> pages = [
     AdminDashBoard(),
     // RentalDashboard(),

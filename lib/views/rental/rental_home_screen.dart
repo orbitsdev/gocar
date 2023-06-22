@@ -23,7 +23,10 @@ class _RentalHomeScreenState extends State<RentalHomeScreen>
   int currentIndex = 0;
   late TabController tabController;
   late String token;
-
+ @override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
+  }
   List<Widget> pages = [
     RentalDashboard(),
     RentalVehicleList(),
