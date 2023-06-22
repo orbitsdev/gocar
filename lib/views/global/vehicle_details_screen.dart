@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gocar/controllers/auth/auth_controller.dart';
 import 'package:gocar/widgets/car_details_card.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -19,6 +20,7 @@ class VehicleDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authcontroller = Get.find<AuthController>();
     return Scaffold(
       // appBar: AppBar(
       //   title: const Text('Title'),
@@ -33,10 +35,24 @@ class VehicleDetailsScreen extends StatelessWidget {
               flexibleSpace: FlexibleSpaceBar(
                 background: Stack(
                   children: [
-                    Image.network(
-                      vehicle!.cover_image as String,
+                    CachedNetworkImage(
+                      imageUrl: vehicle!.cover_image as String,
                       fit: BoxFit.cover,
                       width: double.infinity,
+                      height: 200,
+                      placeholder: (BuildContext context, String url) =>
+                          Shimmer.fromColors(
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
+                        child: Container(
+                          width: double.infinity,
+                          height: 200,
+                          color: Colors.white,
+                        ),
+                      ),
+                      errorWidget:
+                          (BuildContext context, String url, dynamic error) =>
+                              Icon(Icons.error),
                     ),
                     Positioned(
                       bottom: 20,
@@ -197,39 +213,41 @@ class VehicleDetailsScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomSheet: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: 16,
-          horizontal: 20,
-        ),
-        color: Colors.white,
-        height: MediaQuery.of(context).size.height * 0.13,
-        child: SingleChildScrollView(
-          physics: NeverScrollableScrollPhysics(),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 60,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColor.primary,
-                    foregroundColor: Colors.white,
-                  ),
-                  onPressed: () {},
-                  child: const Center(
-                    child: Text(
-                      'Book Car Now',
-                      style: TextStyle(fontSize: 16),
+      bottomSheet: authcontroller.user.value.role == 'Client'
+          ? null
+          : Container(
+              padding: EdgeInsets.symmetric(
+                vertical: 16,
+                horizontal: 20,
+              ),
+              color: Colors.white,
+              height: MediaQuery.of(context).size.height * 0.13,
+              child: SingleChildScrollView(
+                physics: NeverScrollableScrollPhysics(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 60,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColor.primary,
+                          foregroundColor: Colors.white,
+                        ),
+                        onPressed: () {},
+                        child: const Center(
+                          child: Text(
+                            'Book Car Now',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }

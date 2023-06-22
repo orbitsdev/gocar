@@ -7,6 +7,7 @@ import 'package:gocar/bindings/app_bindings.dart';
 import 'package:gocar/controllers/auth/auth_controller.dart';
 import 'package:gocar/utils/themes/app_color.dart';
 import 'package:gocar/views/admin/admin_home_screen.dart';
+import 'package:gocar/views/auth/email_verification_screen.dart';
 import 'package:gocar/views/auth/login_screen.dart';
 import 'package:gocar/views/auth/register_screen.dart';
 import 'package:gocar/views/auth/select_type_screen.dart';
@@ -62,11 +63,13 @@ class _MyAppState extends State<MyApp> {
                         return Center(child: LoaderWidget());
                       } else {
                         if (snapshot.hasData) {
-                          final userData =
-                              snapshot.data!.data() as Map<String, dynamic>?;
-                          authcontroller.getUserDetails(uid);
+                          final userData =    snapshot.data!.data() as Map<String, dynamic>?; authcontroller.getUserDetails(uid);
                           final role = userData?['role'] as String?;
-                          if (role == 'Admin') {
+                          final isEmailVerified = user.emailVerified;
+
+                          if(!isEmailVerified){
+                            return  EmailVerificationScreen();
+                          }else if (role == 'Admin') {
                             return AdminHomeScreen();
                           } else if (role == 'Car Owner') {
                             return RentalHomeScreen();
@@ -107,8 +110,7 @@ class _MyAppState extends State<MyApp> {
           GetPage(name: '/select-type', page: () => SelectTypeScreen()),
           GetPage(name: '/register', page: () => RegisterScreen()),
           GetPage(name: '/admin', page: () => AdminHomeScreen()),
-          GetPage(name: '/admin', page: () => AdminHomeScreen()),
-          
+          GetPage(name: '/email-verification', page: () => EmailVerificationScreen()),
           GetPage(name: '/rental', page: () => RentalHomeScreen()),
           GetPage(name: '/rental-dashboard', page: () => RentalDashboard()),
           GetPage(name: '/rental-vehicle-list', page: () => RentalVehicleList()),
