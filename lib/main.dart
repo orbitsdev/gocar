@@ -63,13 +63,15 @@ class _MyAppState extends State<MyApp> {
                         return Center(child: LoaderWidget());
                       } else {
                         if (snapshot.hasData) {
-                          final userData =    snapshot.data!.data() as Map<String, dynamic>?; authcontroller.getUserDetails(uid);
+                          final userData =
+                              snapshot.data!.data() as Map<String, dynamic>?;
+                          authcontroller.getUserDetails(uid);
                           final role = userData?['role'] as String?;
                           final isEmailVerified = user.emailVerified;
 
-                          if(!isEmailVerified){
-                            return  EmailVerificationScreen();
-                          }else if (role == 'Admin') {
+                          if (!isEmailVerified) {
+                            return EmailVerificationScreen();
+                          } else if (role == 'Admin') {
                             return AdminHomeScreen();
                           } else if (role == 'Car Owner') {
                             return RentalHomeScreen();
@@ -110,14 +112,21 @@ class _MyAppState extends State<MyApp> {
           GetPage(name: '/select-type', page: () => SelectTypeScreen()),
           GetPage(name: '/register', page: () => RegisterScreen()),
           GetPage(name: '/admin', page: () => AdminHomeScreen()),
-          GetPage(name: '/email-verification', page: () => EmailVerificationScreen()),
+          GetPage(
+              name: '/email-verification',
+              page: () => EmailVerificationScreen()),
           GetPage(name: '/rental', page: () => RentalHomeScreen()),
           GetPage(name: '/rental-dashboard', page: () => RentalDashboard()),
-          GetPage(name: '/rental-vehicle-list', page: () => RentalVehicleList()),
-          GetPage(name: '/rental-vehicle-create', page: () => RentalCreateRecord()),
-          GetPage(name: '/rental-vehicle-update', page: () => RentalUpdateRecord()),
-          GetPage(name: '/rental-vehicle-view', page: () => RentalVehicleDetails()),
+          GetPage(
+              name: '/rental-vehicle-list', page: () => RentalVehicleList()),
+          GetPage(
+              name: '/rental-vehicle-create', page: () => RentalCreateRecord()),
+          GetPage(
+              name: '/rental-vehicle-update', page: () => RentalUpdateRecord()),
+          GetPage(
+              name: '/rental-vehicle-view', page: () => RentalVehicleDetails()),
           GetPage(name: '/client', page: () => ClientHomeScreen()),
+          // GetPage(name: '/profile', page: () => ProfileScreen()),
         ]);
   }
 }

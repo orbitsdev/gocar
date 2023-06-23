@@ -182,4 +182,13 @@ class AuthController extends GetxController {
       Modal.errorToast(message: e.toString());
     }
   }
+
+  
+Future<void> updateUser() async {
+
+      String uid = auth.currentUser!.uid;
+      final userdetails =  await users.doc(uid).get();
+      user(UserAccount.fromMap(userdetails.data() as Map<String,dynamic>));
+      update();
+}
 }
